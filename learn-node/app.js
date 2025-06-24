@@ -1,4 +1,6 @@
-const math = require('./math') //common.js
+// const math = require('./math') //common.js
+
+import math from './modules/math.js' // ESModules 
 
 console.log('Hello Node');
 
@@ -29,4 +31,3 @@ console.log(math.add(2, 4));
 console.log(math.sub(2, 4));
 console.log(math.multiply(2, 4));
 console.log(math.div(2, 4));
-

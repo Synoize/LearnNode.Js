@@ -15,4 +15,6 @@ const div = (a, b) => {
     return `Division is ${a / b}`
 }
 
-module.exports = { add, sub, multiply, div }
+export default { add, sub, multiply, div } // ESModules
+
+// module.exports = { add, sub, multiply, div } //common js

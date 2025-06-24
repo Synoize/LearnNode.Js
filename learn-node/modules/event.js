@@ -1,6 +1,6 @@
 // Event Module : EventEmitter is a core module in node.jsused to create and handle custom events.
 
-const EventEmitter = require('events')
+import EventEmitter from 'events'
 
 // console.log('EventEmitter: ', EventEmitter);
 

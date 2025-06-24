@@ -1,11 +1,11 @@
-const path = require('path') //path module
+import path from 'path' //path module
 
 // -------------------------------------
 //              path module
 // -------------------------------------
 
-console.log(__dirname); // present working dir
-console.log(__filename); // present working filename 
+// console.log(__dirname); // present working dir
+// console.log(__filename); // present working filename 
 
 const filePath = path.join('folder', 'store', 'new', 'data.txt')
 

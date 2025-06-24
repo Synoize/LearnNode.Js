@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>URL Shortener</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            margin-top: 50px;
+        }
+
+        .container {
+            border-radius: 10px;
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            background: rgb(237, 237, 237);
+            padding: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .container form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .container form div {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .container form div input {
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .container form button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        ul {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            gap: 10px;
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+        }
+
+        ul li a {
+            color: blue;
+            text-decoration: underline;
+            
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>URL Shortener</h1>
+        <form id="shorter-form">
+            <div>
+                <label for="url">Enter URL</label>
+                <input type="url" name="url" id="url" placeholder="https://example.com" required />
+            </div>
+            <div>
+                <label for="shortCode">Enter short code (optional)</label>
+                <input type="text" name="shortCode" id="shortCode" placeholder="Custom code (optional)" />
+            </div>
+            <button type="submit">Shorten</button>
+        </form>
+
+        <h2>Shortened URLs</h2>
+        <ul id="shorter-urls"></ul>
+    </div>
+
+    <script>
+        const form = document.getElementById("shorter-form");
+        const list = document.getElementById("shorter-urls");
+
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const url = formData.get("url");
+            const shortCode = formData.get("shortCode");
+
+            try {
+                const response = await fetch("/shorter", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ url, shortCode }),
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const shortUrl = `${window.location.origin}/${data.shortCode}`;
+                    const li = document.createElement("li");
+                    li.innerHTML = `<a href="${shortUrl}" target="_blank">${shortUrl}</a>`;
+                    list.prepend(li);
+                    form.reset();
+                } else {
+                    const errorMsg = await response.text();
+                    alert("Error: " + errorMsg);
+                }
+            } catch (error) {
+                console.error("Request failed:", error);
+                alert("Failed to shorten URL. Try again later.");
+            }
+        });
+    </script>
+</body>
+
+</html>

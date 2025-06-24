@@ -5,7 +5,7 @@ const fileName = 'fsAsyncAwaitFile.txt'
 const filePath = path.join(__dirname, fileName)
 
 // -------------------------------------
-//              Read Directory
+//             Read Directory
 // -------------------------------------
 
 // const readDir = async () => {
